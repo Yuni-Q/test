@@ -34,12 +34,12 @@ const Swipe: NextPage<{ initData: any }> = ({ initData }) => {
 						다시 시도하시겠어요?
 				</div>
 					</DetailText>
-					<Reload onClick={ async () => {
+					<Reload onClick={async () => {
 						try {
-							const newData = await Axios.get('http://localhost:8080/api/orders/v2/page', { withCredentials: true});
+							const newData = await Axios.get('http://yh-toy-lb-310524064.ap-northeast-2.elb.amazonaws.com/api/orders/v2/page', { withCredentials: true });
 							setData([...newData.data]);
-							setIndex(0);	
-						} catch(e) {
+							setIndex(0);
+						} catch (e) {
 							console.log(e)
 						}
 					}}>다시 시도하기</Reload>
@@ -111,15 +111,15 @@ interface ServerSideProps {
 
 export const getServerSideProps = async (): Promise<ServerSideProps | void> => {
 	try {
-		const data = await Axios.get('http://localhost:8080/api/orders/v2/page', { withCredentials: true });
+		const newData = await Axios.get(`http://yh-toy-resource-lb-2070114823.ap-northeast-2.elb.amazonaws.com/api/orders/v2/page?woowatonV=${data[0].woowatonV}`, { withCredentials: true });
 		return {
 			props: {
-				initData: data.data,
+				initData: newData.data,
 			}
 		}
-	} catch(e) {
+	} catch (e) {
 		return;
-	}	
+	}
 };
 
 export default Swipe;
