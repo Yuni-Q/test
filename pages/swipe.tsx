@@ -9,6 +9,7 @@ import { DetailText } from './complete/[id]';
 import { Bottom } from './index';
 
 const Swipe: NextPage<{ initData: any }> = ({ initData }) => {
+	const [offset, setOffset] = useState(2);
 	const [data, setData] = useState(initData);
 	const router = useRouter();
 	const [index, setIndex] = useState(0)
@@ -36,9 +37,10 @@ const Swipe: NextPage<{ initData: any }> = ({ initData }) => {
 					</DetailText>
 					<Reload onClick={async () => {
 						try {
-							const newData = await Axios.get('http://yh-toy-lb-310524064.ap-northeast-2.elb.amazonaws.com/api/orders/v2/page', { withCredentials: true });
+							const newData = await Axios.get(`http://yh-toy-resource-lb-2070114823.ap-northeast-2.elb.amazonaws.com/api/orders/page?offset=${offset}&limit=10`, { withCredentials: true });
 							setData([...newData.data]);
 							setIndex(0);
+							setOffset(offset => offset + 1);
 						} catch (e) {
 							console.log(e)
 						}
@@ -111,10 +113,10 @@ interface ServerSideProps {
 
 export const getServerSideProps = async (): Promise<ServerSideProps | void> => {
 	try {
-		const newData = await Axios.get(`http://yh-toy-resource-lb-2070114823.ap-northeast-2.elb.amazonaws.com/api/orders/v2/page?woowatonV=${data[0].woowatonV}`, { withCredentials: true });
+		const data = await Axios.get(`http://localhost:8080/api/orders/v2/page`, { withCredentials: true });
 		return {
 			props: {
-				initData: newData.data,
+				initData: data.data,
 			}
 		}
 	} catch (e) {
