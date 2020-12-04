@@ -1,7 +1,7 @@
 import nextServer from "./server";
 import { log } from "./utils/log";
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8000;
 
 const localServer = async () => {
 	const server = await nextServer()
