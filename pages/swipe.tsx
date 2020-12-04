@@ -36,9 +36,7 @@ const Swipe: NextPage<{ initData: any }> = ({ initData }) => {
 					</DetailText>
 					<Reload onClick={ async () => {
 						try {
-							const newData = await Axios.get('http://yh-toy-lb-310524064.ap-northeast-2.elb.amazonaws.com/api/orders/v2/page', { withCredentials: true, headers: {
-                Cookie: `woowatonV=${data[0].woowatonV};`
-							} });
+							const newData = await Axios.get('http://yh-toy-lb-310524064.ap-northeast-2.elb.amazonaws.com/api/orders/v2/page', { withCredentials: true});
 							setData([...newData.data]);
 							setIndex(0);	
 						} catch(e) {
