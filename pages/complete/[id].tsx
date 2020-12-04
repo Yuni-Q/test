@@ -42,7 +42,7 @@ interface ServerSideProps {
 }
 
 export const getServerSideProps = async ({ params }: any): Promise<ServerSideProps | void> => {
-	const data = await Axios.get(`http://http:/localhost:8080/api/orders/v2/page/${params.id}`);
+	const data = await Axios.get(`http:/localhost:8080/api/orders/v2/page/${params.id}`);
 
 	return {
 		props: {
